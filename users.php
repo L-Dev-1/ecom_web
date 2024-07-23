@@ -1,13 +1,11 @@
 <?php
-include('Include/sidebar.php')
-?>
-<?php
-include('Include/header.php')
-?>
-<?php
+session_start();
+include('Include/sidebar.php');
+include('Include/header.php');
 require_once('Config/dbcon.php');
 $query = "Select u.id, u.username, u.password, r.role from tbl_users as u inner join tbl_roles as r on u.role = r.id";
 $result = mysqli_query($conn, $query);
+
 ?>
 
 <div class="container">

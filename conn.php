@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require 'Config/dbcon.php';
 
 if (isset($_POST['insert_user'])) {
@@ -53,4 +55,30 @@ if (isset($_POST["delete_user"])) {
         header("Location: users.php");
         exit();
     }
+}
+
+if (isset($_POST["login"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $sql = "SELECT id, username, password FROM tbl_users WHERE username = '$username' and password = '$password'";
+    $result = mysqli_query($conn, $sql);
+
+    $data = mysqli_fetch_assoc($result);
+    if ($data) {
+        $_SESSION['user_id'] = $data['id'];
+        $_SESSION['user_name'] = $data['username'];
+        header("Location: admin.php");
+    } else {
+        $error =  "Incorrect username or password";
+        header("Location: login/index.php?msg=$error");
+        // exit();
+    }
+}
+
+
+// for logout 
+if (isset($_POST["logout"])) {
+    session_destroy();
+    header("Location: ./");
 }
