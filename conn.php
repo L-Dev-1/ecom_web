@@ -61,14 +61,18 @@ if (isset($_POST["login"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $sql = "SELECT id, username, password FROM tbl_users WHERE username = '$username' and password = '$password'";
+    $sql = "SELECT id, username, password, role FROM tbl_users WHERE username = '$username' and password = '$password'";
     $result = mysqli_query($conn, $sql);
 
     $data = mysqli_fetch_assoc($result);
     if ($data) {
         $_SESSION['user_id'] = $data['id'];
         $_SESSION['user_name'] = $data['username'];
-        header("Location: admin.php");
+        if ($data["role"] == 1) {
+            header("Location: admin.php");
+        } else {
+            header("Location: home");
+        }
     } else {
         $error =  "Incorrect username or password";
         header("Location: login/index.php?msg=$error");
