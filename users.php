@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION["user_id"])) {
+  header("Location: login");
+}
 include('Include/sidebar.php');
 include('Include/header.php');
 require_once('Config/dbcon.php');
