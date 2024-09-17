@@ -12,11 +12,8 @@ if (isset($_SESSION['user_id'])) {
     if ($data) {
         if ($data["role"] == 1) {
             header("Location: admin.php");
-        } else {
-            header("Location: home");
         }
-        exit();
     }
 }
-header("Location: login/index.php");
+header("Location: home");
 exit();
